@@ -1,0 +1,35 @@
+[
+  {
+    "name": "${container_name}",
+    "image": "${ecr_url}:${sha_tag}",
+    "memory": 224,
+    "cpu": 512,
+    "essential": true,
+    "portMappings": [
+      {
+        "hostPort": 80,        
+        "containerPort": 4000,
+        "protocol": "tcp"
+      }
+    ],
+    "command": [
+      "npm",
+      "start"
+    ],
+    "environment": [
+      {
+        "name": "MONGO_URL",
+        "value": "${mongo_url}"        
+      }
+    ],
+    "mountPoints": null,
+    "volumesFrom": null,
+    "hostname": null,
+    "user": null,
+    "workingDirectory": null,
+    "extraHosts": null,
+    "logConfiguration": null,
+    "ulimits": null,
+    "dockerLabels": null
+  }
+]
