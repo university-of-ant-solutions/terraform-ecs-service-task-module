@@ -4,7 +4,7 @@ terraform {
 }
 
 data "template_file" "task_definitions" {
-  template = "${file("${path.module}/templates/auth_service_task_definitions.json")}"
+  template = "${file("${path.module}/templates/service_task_definitions.json")}"
 
   vars {
     sha_tag           = "${var.sha_tag}"
@@ -15,7 +15,7 @@ data "template_file" "task_definitions" {
 }
 
 data "template_file" "task_definitions_alb" {
-  template = "${file("${path.module}/templates/auth_service_task_definitions_alb.json")}"
+  template = "${file("${path.module}/templates/service_task_definitions_alb.json")}"
 
   vars {
     sha_tag           = "${var.sha_tag}"
