@@ -16,12 +16,7 @@
       "npm",
       "start"
     ],
-    "environment": [
-      {
-        "name": "MONGO_URL",
-        "value": "${mongo_url}"        
-      }
-    ],
+    ${ecs_environment},
     "mountPoints": null,
     "volumesFrom": null,
     "hostname": null,

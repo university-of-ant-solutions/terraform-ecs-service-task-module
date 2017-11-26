@@ -3,13 +3,30 @@ terraform {
   backend "s3" {}
 }
 
+data "template_file" "ecs_environment" {
+  count = "${length(keys(var.ecs_environment))}"
+  template = "$${val}"
+  vars {
+    val = "${jsonencode(
+      map(
+        "name",
+        element(keys(var.ecs_environment), count.index),
+        "value",
+        var.ecs_environment[element(keys(var.ecs_environment), count.index)]
+      )
+    )}"
+  }
+}
+
 data "template_file" "task_definitions" {
   template = "${file("${path.module}/templates/service_task_definitions.json")}"
 
   vars {
     sha_tag           = "${var.sha_tag}"
     ecr_url           = "${var.ecr_url}"
-    mongo_url         = "${var.mongo_url}"
+    ecs_environment   = <<JSON
+    "environment": [${join(",", data.template_file.ecs_environment.*.rendered)}]
+    JSON
     container_name    = "${local.container_name}"
   }
 }
@@ -20,7 +37,9 @@ data "template_file" "task_definitions_alb" {
   vars {
     sha_tag           = "${var.sha_tag}"
     ecr_url           = "${var.ecr_url}"
-    mongo_url         = "${var.mongo_url}"
+    ecs_environment   = <<JSON
+    "environment": [${join(",", data.template_file.ecs_environment.*.rendered)}]
+    JSON
     container_name    = "${local.container_name}"
   }
 }

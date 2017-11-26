@@ -23,7 +23,9 @@ variable "ecs_profile_arn" {
   default = "OVERWRITE VALUE AND CHANGE create_alb=true IF YOU WANT TO DEPLOY WITH ALB"
 }
 
-variable "mongo_url" {}
+variable "ecs_environment" {
+  type = "map"
+}
 
 variable "sha_tag" {}
 
@@ -34,3 +36,4 @@ variable "ecr_url" {}
 variable "environment" {}
 
 variable "version" {}
+
