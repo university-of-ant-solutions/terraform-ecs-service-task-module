@@ -35,5 +35,5 @@ variable "ecr_url" {}
 
 variable "environment" {}
 
-variable "version" {}
+variable "app_version" {}
 
